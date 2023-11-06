@@ -11,7 +11,9 @@ import com.mvn1101.shoppinglist.domain.ShopItem
 
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
-    private var count = 0
+    var count = 0
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
     var shopList = listOf<ShopItem>()
         set(value) {
@@ -33,26 +35,22 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
-        val status = if(shopItem.enabled) {
-            "Active"
-        } else {
-            "Not Active"
-        }
-        viewHolder.tvName.text = "${shopItem.name} $status"
-        viewHolder.tvCount.text = shopItem.count.toString()
         viewHolder.view.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(shopItem)
             true
         }
+        viewHolder.view.setOnClickListener {
+            onShopItemClickListener?.invoke(shopItem)
+            true
+        }
+        viewHolder.tvName.text = shopItem.name
+        viewHolder.tvCount.text = shopItem.count.toString()
     }
 
     override fun getItemCount(): Int {
         return shopList.size
     }
 
-    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tv_name)
-        val tvCount = view.findViewById<TextView>(R.id.tv_count)
-    }
 
     override fun getItemViewType(position: Int): Int {
         var item = shopList[position]
@@ -63,6 +61,11 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         }
     }
 
+    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        val tvName = view.findViewById<TextView>(R.id.tv_name)
+        val tvCount = view.findViewById<TextView>(R.id.tv_count)
+    }
+
     companion object {
         const val VIEW_TYPE_ENABLED = 100
         const val VIEW_TYPE_DISABLED = 101
@@ -70,4 +73,6 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         const val MAX_POOL_SIZE = 10
 
     }
+
+
 }
