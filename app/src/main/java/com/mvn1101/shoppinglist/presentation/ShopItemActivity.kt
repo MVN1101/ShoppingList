@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +24,7 @@ class ShopItemActivity : AppCompatActivity() {
     private lateinit var saveButton: Button
 
     private var screenMode = MODE_UNKNOWN
-    private var shopItemId =ShopItem.UNDEFINED_ID
+    private var shopItemId = ShopItem.UNDEFINED_ID
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,35 +95,33 @@ class ShopItemActivity : AppCompatActivity() {
     }
 
     private fun launchAddMode() {
-        Log.d("Mode", "Add mode")
-        saveButton.setOnClickListener(){
-            viewModel.addShopItem(etName.text?.toString(),etCount.text?.toString())
+        saveButton.setOnClickListener() {
+            viewModel.addShopItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
     private fun launchEditMode() {
-        Log.d("Mode", "Edit mode")
         viewModel.getShopItem(shopItemId)
         viewModel.shopItem.observe(this) {
             etName.setText(it.name)
             etCount.setText(it.count.toString())
         }
-            saveButton.setOnClickListener(){
-            viewModel.editShopItem(etName.text?.toString(),etCount.text?.toString())
+        saveButton.setOnClickListener() {
+            viewModel.editShopItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
-    private fun parseIntent(){
+    private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {
             throw RuntimeException("Param screen mode is absent")
         }
         val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
-        if (mode != MODE_ADD && mode != MODE_EDIT ) {
+        if (mode != MODE_ADD && mode != MODE_EDIT) {
             throw RuntimeException("Unknown screen mode $mode")
         }
         screenMode = mode
         if (screenMode == MODE_EDIT) {
-            if (!intent.hasExtra(EXTRA_SHOP_ITEM_ID)){
+            if (!intent.hasExtra(EXTRA_SHOP_ITEM_ID)) {
                 throw RuntimeException("Param shop item id is absent")
             }
             shopItemId = intent.getIntExtra(EXTRA_SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
