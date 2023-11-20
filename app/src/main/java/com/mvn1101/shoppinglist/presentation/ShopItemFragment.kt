@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +40,13 @@ class ShopItemFragment : Fragment() {
         } else {
             throw RuntimeException("Activity must implement OnEditingFinishedListener")
         }
+        Log.d("cycle", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseParams()
+        Log.d("cycle", "onCreate")
     }
 
     override fun onCreateView(
@@ -51,7 +54,9 @@ class ShopItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("cycle", "onCreateView")
         return inflater.inflate(R.layout.fragment_shop_item, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,6 +67,7 @@ class ShopItemFragment : Fragment() {
         addTextChangeListener()
         launchRightMode()
         observeViewModels()
+        Log.d("cycle", "onViewCreated")
     }
 
     private fun observeViewModels() {
@@ -118,6 +124,41 @@ class ShopItemFragment : Fragment() {
             MODE_EDIT -> launchEditMode()
             MODE_ADD -> launchAddMode()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("cycle", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("cycle", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("cycle", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("cycle", "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("cycle", "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("cycle", "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("cycle", "onDetach")
     }
 
     private fun launchAddMode() {
