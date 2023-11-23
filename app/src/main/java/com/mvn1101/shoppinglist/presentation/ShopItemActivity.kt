@@ -10,7 +10,7 @@ import com.mvn1101.shoppinglist.domain.ShopItem
 class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private var screenMode = MODE_UNKNOWN
-    private var shopItemId = ShopItem.UNDEFINED_ID
+     private var shopItemId = ShopItem.UNDEFINED_ID
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
