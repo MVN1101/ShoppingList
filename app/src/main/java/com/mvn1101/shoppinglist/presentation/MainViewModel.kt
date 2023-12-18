@@ -7,7 +7,7 @@ import com.mvn1101.shoppinglist.domain.EditShopItemUseCase
 import com.mvn1101.shoppinglist.domain.GetShopListUseCase
 import com.mvn1101.shoppinglist.domain.ShopItem
 
-class MainViewModel : ViewModel() {
+class   MainViewModel : ViewModel() {
 
     private val repository = ShopListRepositoryImpl
 
