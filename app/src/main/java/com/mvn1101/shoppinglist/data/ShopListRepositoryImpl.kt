@@ -2,6 +2,7 @@ package com.mvn1101.shoppinglist.data
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.mvn1101.shoppinglist.domain.ShopItem
 import com.mvn1101.shoppinglist.domain.ShopListRepository
 
@@ -26,7 +27,7 @@ class ShopListRepositoryImpl(application: Application) : ShopListRepository {
         return mapper.mapDBModelToEntity(dbModel)
     }
 
-    override fun getShopList(): LiveData<List<ShopItem>> = Transfo.map(
+    override fun getShopList(): LiveData<List<ShopItem>> = Transformations.map(
         shopListDao.getShopList()
     ) {
         mapper.mapListDbModelToListEntity(it)
